@@ -1,0 +1,16 @@
+<div class="feed-new-container">
+
+<div class="alert" ng-show="error">{{ error }}</div>
+
+<div style="margin-top:15px">
+  <p>投稿するアカウントを選択してください。 あなたが代わりに投稿します。</p>
+  <input type="text" class="form-control" ng-model="searchText" placeholder="絞り込み">
+</div>
+<div class="media" ng-repeat="user in list | filter:searchText" ng-click="selected(user)">
+  <div class="pull-left">
+    <img class="media-object" src="https://graph.facebook.com/{{ user.id }}/picture?type=square" ng-clock>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">{{ user.name }}</h4>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<h2>ニュースフィード</h2>
+<p class="text-muted">この投稿は本人ではなく、第三者が行ったものです。</p>
+
+<div class="" style="margin-bottom:20px">
+  <div class="media" ng-repeat="feed in list">
+    <div class="pull-left prof-image">
+      <img class="media-object" ng-src="https://graph.facebook.com/{{ feed.user_id }}/picture?type=square" ng-clock>
+      <span class="fake-label">FAKE</span>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{ feed.user_name }}</h4>
+      <p style="float:left; color: #aaa;">{{ feed.createDate | date:'M月d日 HH:mm'}}</p>
+      <div style="float:right">
+        <div class="fb-like" data-href="http://www21084ue.sakura.ne.jp/feed/{{ feed.org.id }}" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+      </div>
+    </div>
+    <div style="white-space: pre-wrap;">{{ feed.content }}</div>
+
+
+    <div style="margin:10px">
+    <div ng-repeat="comment in feed.comments" style="border-top: 1px solid #eee;">
+      <div style="
+          display: inline;
+          white-space: pre-wrap;
+          ">{{ comment.content }}</div>
+      <div style="
+          font-size: 0.9em;
+          color: #aaa;
+          display: inline;
+          float:right;
+          ">{{ comment.createDate | date:'M月d日 HH:mm' }}</div>
+    </div>
+    </div>
+
+
+    <div>
+      <button class="btn btn-danger btn-xs" ng-show="facebookId === feed.user_id" ng-click="delete(feed)" >削除</button>
+      <button class="btn btn-default btn-xs" ng-show="!showComment && facebookId" ng-click="showComment=true">コメント</button>
+      <a class="btn btn-link btn-xs"  href="/feed/{{ feed.org.id }}">詳細</a>
+      <div ng-show="showComment">
+        <form name="myForm">
+          <textarea class="form-control" style="width:100%; margin-bottom:5px;" ng-model="comment" required></textarea>
+          <div class="text-right">
+          <button class="btn btn-primary btn-xs"
+                  ng-click="sendComment(feed, comment); showComment=false;">送信</button> 
+          <button class="btn btn-default btn-xs"
+                  ng-click="showComment = false">キャンセル</button> 
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
